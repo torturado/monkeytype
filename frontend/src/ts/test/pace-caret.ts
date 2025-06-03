@@ -9,6 +9,7 @@ import * as TestState from "./test-state";
 import * as ConfigEvent from "../observables/config-event";
 import { convertRemToPixels } from "../utils/numbers";
 import { getActiveFunboxes } from "./funbox/list";
+import { Mode2 } from "@monkeytype/contracts/schemas/shared";
 
 type Settings = {
   wpm: number;
@@ -115,6 +116,11 @@ export async function init(): Promise<void> {
       Config.lazyMode
     );
     wpm = Math.round(wpm);
+  } else if (Config.paceCaret === "nextLb") {
+    wpm = await DB.getNextDailyLeaderboardWpm(
+      mode2 as Mode2<"time">,
+      Config.language
+    );
   } else if (Config.paceCaret === "custom") {
     wpm = Config.paceCaretCustomSpeed;
   } else if (Config.paceCaret === "last" || TestState.isPaceRepeat) {

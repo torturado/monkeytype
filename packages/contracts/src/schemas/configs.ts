@@ -133,6 +133,7 @@ export const PaceCaretSchema = z.enum([
   "last",
   "custom",
   "daily",
+  "nextLb",
 ]);
 export type PaceCaret = z.infer<typeof PaceCaretSchema>;
 

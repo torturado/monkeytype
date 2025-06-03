@@ -62,6 +62,15 @@ const subgroup: CommandsSubgroup = {
       },
     },
     {
+      id: "setPaceCaretNextLb",
+      display: "next lb",
+      configValue: "nextLb",
+      exec: (): void => {
+        UpdateConfig.setPaceCaret("nextLb");
+        TestLogic.restart();
+      },
+    },
+    {
       id: "setPaceCaretCustom",
       display: "custom...",
       configValue: "custom",

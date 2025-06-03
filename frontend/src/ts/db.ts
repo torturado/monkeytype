@@ -626,6 +626,31 @@ export async function getActiveTagsPB<M extends Mode>(
   return tagPbWpm;
 }
 
+export async function getNextDailyLeaderboardWpm(
+  mode2: Mode2<"time">,
+  language: string
+): Promise<number> {
+  const rankResp = await Ape.leaderboards.getDailyRank({
+    query: { language, mode: "time", mode2 },
+  });
+  if (rankResp.status !== 200 || rankResp.body.data === null) {
+    return 0;
+  }
+  const rank = rankResp.body.data.rank;
+  if (rank <= 1) return 0;
+
+  const pageSize = 10;
+  const page = Math.floor((rank - 2) / pageSize);
+  const lbResp = await Ape.leaderboards.getDaily({
+    query: { language, mode: "time", mode2, page, pageSize },
+  });
+  if (lbResp.status !== 200) return 0;
+  const idx = (rank - 2) % pageSize;
+  const entry = lbResp.body.data.entries[idx];
+  if (!entry) return 0;
+  return entry.wpm + 1;
+}
+
 export async function getLocalPB<M extends Mode>(
   mode: M,
   mode2: Mode2<M>,

@@ -55,7 +55,8 @@ function update(): void {
         if (
           Config.paceCaret === "average" ||
           Config.paceCaret === "tagPb" ||
-          Config.paceCaret === "daily"
+          Config.paceCaret === "daily" ||
+          Config.paceCaret === "nextLb"
         ) {
           await PaceCaret.init();
         }
@@ -81,7 +82,8 @@ function update(): void {
           if (
             Config.paceCaret === "average" ||
             Config.paceCaret === "tagPb" ||
-            Config.paceCaret === "daily"
+            Config.paceCaret === "daily" ||
+            Config.paceCaret === "nextLb"
           ) {
             await PaceCaret.init();
           }
